@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org"
+      mlns:layout="http://www.ultraq.net.nz/thymeleaf/layaout"
+      layout:decorate="~{layout}"> 
+    <!--    <head>
+            <title>Update</title>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+        </head>-->
+    <body layout:fragment="body">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+
+        </br>
+        </br>
+
+
+        <div class = "container">
+            <center><h3>Usuario</h3></center>
+            </br>
+            <form th:action="@{/usuario/form}" method="post" th:object="${usuariodireccion}" enctype="multipart/form-data">
+
+                <input type="hidden" th:field="*{usuario.idusuario}">
+                
+
+                <div class ="row">
+
+                    <div class="col-3">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-person-circle"></i></span>
+                            <input type="text" class="form-control" placeholder="Nombre" onkeypress="return sololetras(event, 'lblNombre')" id="txtnombre" name="nombre" th:field="*{usuario.nombre}" required/>
+                        </div>
+                        <label id="lblNombre"></label>
+                    </div>
+                    <div class="col-3">
+
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-person-circle"></i></span>
+                            <input type="text" class="form-control" placeholder="Apellido Paterno" onkeypress="return sololetras(event, 'lblApellidoPaterno')" id="txtapellidopaterno" name="apellidopaterno" th:field="*{usuario.apellidopaterno}" required>
+                        </div>
+                        <label id="lblApellidoPaterno"></label>
+                    </div>
+
+                    <div class="col-3">
+
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-person-circle"></i></span>
+                            <input type="text" class="form-control" placeholder="Apellido Materno" onkeypress="return sololetras(event, 'lblApellidoMaterno')" id="txtapellidomaterno" name="apellidomaterno" th:field="*{usuario.apellidomaterno}" required>
+                        </div>
+                        <label id="lblApellidoMaterno"></label>
+                    </div>
+                    <div class="col-3">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-calendar2-event"></i></span>
+                            <input type="date" class="form-control"  id="fechanacimiento" name="fechanacimiento" th:field="*{usuario.fechanacimiento}" required>
+                        </div>
+                    </div>
+                </div>
+                </br>
+                <div class ="row">
+                    <div class="col-3">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-gender-ambiguous"></i></span>
+                            <input type="text" class="form-control" placeholder="Sexo" id="sexo" name="sexo" th:field="*{usuario.sexo}" required>
+                        </div>
+                    </div> 
+                    <div class="col-3">
+
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-person-plus-fill"></i></span>
+                            <input type="text" maxlength="10" class="form-control" placeholder="UserName" id="username" name="username" th:field="*{usuario.username}" required>
+                        </div>
+                    </div>    
+                    <div class="col-3">
+
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-envelope"></i></span>
+                            <input type="text" class="form-control" placeholder="Email" id="email" name="email" th:field="*{usuario.email}">
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-key"></i></span>
+                            <input type="text" class="form-control" placeholder="Password" id="password" onblur="validarContrasena(this.value)" name="password" th:field="*{usuario.password}"/>
+                            <p id="errorMessage" style="color: red;"></p>
+                        </div>
+
+                    </div>
+                </div>
+                </br>
+                <div class ="row">
+                    <div class="col-3">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-telephone"></i></span>
+                            <input type="text" maxlength="10" class="form-control" placeholder="Telefono" onkeypress="return solonumeros(event, 'lblTelefono')" id="txttelefono" name="telefono" th:field="*{usuario.telefono}">
+                        </div>
+                        <lable id="lblTelefono"></label>
+                    </div>
+                    <div class="col-3">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-phone"></i></span>
+                            <input type="text" maxlength="10" class="form-control" placeholder="Celular" onkeypress="return solonumeros(event, 'lblCelular')" id="txtcelular" name="celular" th:field="*{usuario.celular}">
+                        </div>
+                        <lable id="lblCelular"></label>
+                    </div>
+                    <div class="col-3">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-archive"></i></span>
+                            <input type="text" maxlength="10" class="form-control" placeholder="Curp" onkeypress="return numeroletra(event, 'lblCurp')" id="txtcurp" name="curp" th:field="*{usuario.curp}" required>
+                        </div>
+                        <lable id="lblCurp"></label>
+                    </div>
+                    <div class="col-3">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-list-ol"></i></span>
+                            <select class="form-select" aria-label="Default select example" name="rol.idrol" id="rol" th:field="*{usuario.rol.idrol}" required>
+                                <option value="0">Selecciona Un Rol</option>
+                                <option th:each="rol : ${roles}" th:value="${rol.idrol}" th:text="${rol.nombre}"></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class ="row">
+                    <div class="form-group">
+                        <label for="imagenFile"> Imagen:</label>
+                         <input type="file" class="form-control" name="imagenFile" id="imagenFile" onchange="mostrarVistaPrevia()">
+                    </div>  
+                    <div class ="row"> 
+                        <img id="vistaPrevia" src="#" alt="Vista previa de la imagen" style="max-width: 25%; max-height: 250px;">
+                    </div>
+                    
+                </div>
+
+                <br/>
+                <hr>
+                <br/>
+                <center><h3>Dirección</h3></center>
+                </br>
+
+
+                <div class ="row">
+                    <div class="col-4">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-signpost-split"></i></i></span>
+                            <input type="text" class="form-control" placeholder="Calle" id="calle" name="calle" th:field="*{direccion.calle}" required>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-1-circle-fill"></i></span>
+                            <input type="text" class="form-control" placeholder="NumeroInterior" onkeypress="return solonumeros(event, 'lblNumeroInterior')" id="txtnumerointerior" name="numerointerior" th:field="*{direccion.numerointerior}" required>
+                        </div>
+                        <label id="lblNumeroInterior"></label>
+                    </div>
+                    <div class="col-4">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-1-circle"></i></span>
+                            <input type="text" class="form-control" placeholder="NumeroExterior" onkeypress="return solonumeros(event, 'lblNumeroExterior')" id="txtnumeroexterior" name="numeroexterior" th:field="*{direccion.numeroexterior}" required>
+                        </div>
+                        <label id="lblNumeroExterior"></label>
+                    </div>
+                </div>
+                <div class ="row">
+                    <div class="col-md-3">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-journal-bookmark-fill"></i></span>
+                            <select class="form-select" aria-label="Default select example" name="direccion.estado.pais.idpais" id="ddlPais">
+                                <option value="0">Seleccione un pais</option>
+                                <option th:each="pais : ${paises}" th:value="${pais.idpais}" th:text="${pais.nombre}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-journal-bookmark-fill"></i></span>
+                            <select th:if="${Estados == null}" class="form-select" aria-label="Default select example" name="direccion.estado.idestado" id="ddlEstado">
+                                <option value="0">Seleccione un estado</option>
+                            </select>
+                            <select th:unless="${Estados == null}" class="form-select" aria-label="Default select example" name="direccion.estado.idestado" id="ddlEstado">
+                                <option th:each="Estado : ${Estados}" th:value="${Estado.idestado}" th:text="${Estado.nombre}"</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-journal-bookmark-fill"></i></span>
+                            <select th:if="${Municipios == null}" class="form-select" aria-label="Default select example" name="direccion.municipio.idmunicipio" id="ddlMunicipio">
+                                <option value="0">Seleccione un municipio</option>
+                            </select>
+                            <select th:unless="${Municipios == null}" class="form-select" aria-label="Default select example" name="direccion.municipio.idmunicipio" id="ddlMunicipio">
+                                <option th:each="Municipio : ${Municipios}" th:value="${Municipio.idmunicipio}" th:text="${Municipio.nombre}"</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-geo-alt-fill"></i></i></span>
+                            <select th:if="${Colonias == null}" class="form-select" aria-label="Default select example" name="direccion.colonia.idcolonia" id="ddlColonia" th:field="*{direccion.colonia.idcolonia}">
+                                <option value="0">Seleccione un colonia</option>
+                            </select>
+                            <select th:unless="${Colonias == null}" class="form-select" aria-label="Default select example" name="direccion.colonia.idcolonia" id="ddlColonia" th:field="*{direccion.colonia.idcolonia}">
+                                <option th:each="Colonia : ${Colonias}" th:value="${Colonia.idcolonia}" th:text="${Colonia.nombre}"</option>
+                            </select>
+                        </div>     <!--<input type="text" class="form-control" placeholder="Colonia" id="colonia" name="colonia" th:field="*{direccion.colonia.idcolonia}">-->
+                    </div>
+                    
+                </div>
+        </div>
+        </br>
+        <div class ="row">
+            <input type="submit" onclick="validarContrasena()" value="Guardar" class="btn btn-success col-2 offset-md-5" />
+        </div>
+    </form>
+</div>
+</body>
+</html>
+
+<Script>
+    function sololetras(e, lbl) {
+
+        var letters = /^[A-Za-z]+$/;
+        var key = e.key;
+        if (key.match(letters))
+        {
+            document.getElementById(lbl).innerHTML = "";
+            return true;
+        } else
+        {
+            document.getElementById(lbl).innerHTML = "Ingresa solo letras";
+            $("#" + lbl).css('color', 'red');
+            return false;
+        }
+    }
+</Script>
+<Script>
+    function solonumeros(e, lbl) {
+
+        var number = /^[0-9]+$/;
+        var key = e.key;
+        if (key.match(number))
+        {
+            document.getElementById(lbl).innerHTML = "";
+            return true;
+        } else
+        {
+            document.getElementById(lbl).innerHTML = "Ingresa un numero valido";
+            $("#" + lbl).css('color', 'red');
+            return false;
+        }
+    }
+</Script>
+
+<Script>
+    function numeroletra(e, lbl) {
+
+        var number = /^[1,2,3,4,5,6,7,8,9,0,A-Za-z]+$/;
+        var key = e.key;
+        if (key.match(number))
+        {
+            document.getElementById(lbl).innerHTML = "";
+            return true;
+        } else
+        {
+            document.getElementById(lbl).innerHTML = "Ingrese un Curp Valido";
+            $("#" + lbl).css('color', 'red');
+            return false;
+        }
+    }
+</Script>
+
+<Script>
+    function validarContrasena(contrasena) {
+        var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,15}$/;
+        var errorMessage = document.getElementById("errorMessage");
+
+        if (!regex.test(contrasena)) {
+            errorMessage.innerText = "La contraseña debe contener al menos una mayúscula, una minúscula, un número y tener entre 8 y 15 caracteres.";
+
+            return false;
+        } else {
+            errorMessage.innerText = "";
+            return true;
+        }
+    }
+    
+    
+    function mostrarVistaPrevia() {
+        var input = document.getElementById('imagenFile');
+        var vistaPrevia = document.getElementById('vistaPrevia');
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                vistaPrevia.src = e.target.result;
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</Script>
+
+
+
+<Script>
+
+    $(document).ready(function () {
+        $("#ddlPais").change(function () {
+            $.ajax({
+                type: "GET",
+                url: "/usuario/GetEstadoByIdPais", // La URL del controlador
+                dataType: "json",
+                data: {IdPais: $("#ddlPais").val()},
+                success: function (estados) {
+                    $("#ddlEstado").empty();
+                    $("#ddlEstado").append('<option value="0">' + 'Seleccione una estado' + '</option>');
+                    $.each(estados, function (i, estado) {
+                        $("#ddlEstado").append('<option value="'
+                                + estado.idestado + '">'
+                                + estado.nombre + '</option>');
+                    });
+                },
+                error: function () {
+                    alert("Error al obtener los datos.");
+                }
+            });
+        });
+
+        $("#ddlEstado").change(function () {
+            $.ajax({
+                type: "GET",
+                url: "/usuario/GetMunicipioByIdEstado", // La URL del controlador
+                dataType: "json",
+                data: {IdEstado: $("#ddlEstado").val()},
+                success: function (municipios) {
+                    $("#ddlMunicipio").empty();
+                    $("#ddlMunicipio").append('<option value="0">' + 'Seleccione una municipio' + '</option>');
+                    $.each(municipios, function (i, municipio) {
+                        $("#ddlMunicipio").append('<option value="'
+                                + municipio.idmunicipio + '">'
+                                + municipio.nombre + '</option>');
+                    });
+                },
+                error: function () {
+                    alert("Error al obtener los datos.");
+                }
+            });
+        });
+
+        $("#ddlMunicipio").change(function () {
+            $.ajax({
+                type: "GET",
+                url: "/usuario/GetColoniaByIdMunicipio", // La URL del controlador
+                dataType: "json",
+                data: {IdMunicipio: $("#ddlMunicipio").val()},
+                success: function (colonias) {
+                    $("#ddlColonia").empty();
+                    $("#ddlColonia").append('<option value="0">' + 'Seleccione una Colonia' + '</option>');
+                    $.each(colonias, function (i, colonia) {
+                        $("#ddlColonia").append('<option value="'
+                                + colonia.idcolonia + '">'
+                                + colonia.nombre + '</option>');
+                    });
+                },
+                error: function () {
+                    alert("Error al obtener los datos.");
+                }
+            });
+        });
+        
+        $("#ddlColonia").change(function () {
+            $.ajax({
+                type: "GET",
+                url: "/usuario/GetDireccionByIdColonia", // La URL del controlador
+                dataType: "json",
+                data: {IdColonia: $("#ddlColonia").val()},
+                
+            });
+        });
+
+
+    });
+</Script>
+
+
+
+
+
+
